@@ -1,7 +1,9 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"net/http"
 	"os"
 	"runtime"
 
@@ -11,8 +13,8 @@ import (
 )
 
 const (
-	ApplicationName = "HCK"
-	ConfigFilePath  = "./hck.conf"
+	ApplicationName = "PHCK"
+	ConfigFilePath  = "./phck.conf"
 )
 
 type Command struct {
@@ -21,6 +23,7 @@ type Command struct {
 }
 
 type Options struct {
+	Cli     bool `short:"c" long:"cli"     description:"CLI mode"`
 	Help    bool `short:"h" long:"help"    description:"Show this help message"`
 	Version bool `short:"v" long:"version" description:"Show this build version"`
 }
@@ -82,7 +85,27 @@ func _main() int {
 		return PrintError(err)
 	}
 
-	server.NewServer(c).Run()
+	if cmd.Options.Cli {
+		c.Health.StatusCode = http.StatusOK
+		for _, v := range c.Health.Process {
+			if !v.IsProcess() {
+				c.Health.StatusCode = http.StatusInternalServerError
+			}
+		}
+
+		b, err := json.Marshal(c.Health)
+
+		if err != nil {
+			return PrintError(err)
+		}
+
+		fmt.Printf("%s", b)
+		return 0
+	}
+
+	if err := server.NewServer(c).Run(); err != nil {
+		return PrintError(err)
+	}
 
 	return 0
 }

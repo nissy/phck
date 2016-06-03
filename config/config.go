@@ -6,8 +6,9 @@ import (
 )
 
 type Config struct {
-	Listen string       `toml:"listen" json:"listen"`
-	Health model.Health `toml:"health" json:"health"`
+	Listen  string       `toml:"listen" json:"listen"`
+	PIDFile string       `toml:"pidfile" json:"-"`
+	Health  model.Health `toml:"health" json:"health"`
 }
 
 func NewConfig(filePath string) (*Config, error) {

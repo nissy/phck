@@ -1,15 +1,14 @@
-# HCK
-HCK is system health checker web server.
+# PHCK
+PHCK is process health checker web server.
 
 ## Usage
 
 #### listen web server
 ```
-$ ./hck hck.conf
+$ ./phck phck.conf
 ```
 
-
-#### check & result success
+#### check process & result success
 ```
 $ curl http://127.0.0.1:8001/ | jq
 {
@@ -47,14 +46,14 @@ $ curl http://127.0.0.1:8001/ | jq
 }
 ```
 
-#### check & result error
+#### check process & result error
 ```
 $ curl http://127.0.0.1:8001/ | jq
 {
   "status_code": 500,
   "process": [
     {
-      "Label": "nginx",
+      "label": "nginx",
       "pidfile": "/var/run/nginx.pid",
       "running": true,
       "detail": {
@@ -68,7 +67,7 @@ $ curl http://127.0.0.1:8001/ | jq
       }
     },
     {
-      "Label": "td-agent",
+      "label": "td-agent",
       "pidfile": "/var/run/td-agent/td-agent.pid",
       "running": false,
       "message": "PID file not opened",
@@ -76,4 +75,21 @@ $ curl http://127.0.0.1:8001/ | jq
     }
   ]
 }
+```
+
+#### CLI mode
+```
+$ ./phck --cli phck.conf | jq
+```
+
+## Help
+```
+Usage:
+  PHCK [OPTIONS] CONFIG_FILE
+
+Application Options:
+  -c, --cli      CLI mode
+  -h, --help     Show this help message
+  -v, --version  Show this build version
+
 ```

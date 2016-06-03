@@ -1,8 +1,10 @@
 package server
 
 import (
+	"github.com/facebookgo/grace/gracehttp"
+	"github.com/facebookgo/pidfile"
 	"github.com/labstack/echo"
-	"github.com/labstack/echo/engine/fasthttp"
+	"github.com/labstack/echo/engine/standard"
 	"github.com/ngc224/hck/config"
 	"github.com/ngc224/hck/controller"
 )
@@ -23,7 +25,22 @@ func (srv *Server) routing() {
 	srv.router.GET("/", srv.controller.HealthCheck)
 }
 
-func (srv *Server) Run() {
+func (srv *Server) Run() error {
 	srv.routing()
-	srv.router.Run(fasthttp.New(srv.controller.Config.Listen))
+
+	if len(srv.controller.Config.PIDFile) > 0 {
+		pidfile.SetPidfilePath(srv.controller.Config.PIDFile)
+
+		if err := pidfile.Write(); err != nil {
+			return err
+		}
+	}
+
+	std := standard.New(srv.controller.Config.Listen)
+	std.SetHandler(srv.router)
+	if err := gracehttp.Serve(std.Server); err != nil {
+		return err
+	}
+
+	return nil
 }
