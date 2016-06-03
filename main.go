@@ -8,8 +8,8 @@ import (
 	"runtime"
 
 	"github.com/jessevdk/go-flags"
-	"github.com/ngc224/hck/config"
-	"github.com/ngc224/hck/server"
+	"github.com/ngc224/phck/config"
+	"github.com/ngc224/phck/server"
 )
 
 const (

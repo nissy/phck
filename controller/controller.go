@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo"
-	"github.com/ngc224/hck/config"
+	"github.com/ngc224/phck/config"
 )
 
 type Controller struct {

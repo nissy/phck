@@ -2,7 +2,7 @@ package config
 
 import (
 	"github.com/BurntSushi/toml"
-	"github.com/ngc224/hck/model"
+	"github.com/ngc224/phck/model"
 )
 
 type Config struct {

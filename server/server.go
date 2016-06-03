@@ -5,8 +5,8 @@ import (
 	"github.com/facebookgo/pidfile"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/engine/standard"
-	"github.com/ngc224/hck/config"
-	"github.com/ngc224/hck/controller"
+	"github.com/ngc224/phck/config"
+	"github.com/ngc224/phck/controller"
 )
 
 type Server struct {
