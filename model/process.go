@@ -32,6 +32,7 @@ func (p *Process) IsProcess() bool {
 	p.Running = false
 	p.Error = nil
 	p.Message = ""
+	p.Detail = ProcessDetail{}
 
 	if p.Detail.PID, p.Error = ReadPIDFile(p.PIDFile); p.Error != nil {
 		p.Message = "PID file not opened"

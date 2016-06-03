@@ -9,7 +9,7 @@ $ ./hck hck.conf
 ```
 
 
-#### check & result
+#### check & result success
 ```
 $ curl http://127.0.0.1:8001/ | jq
 {
@@ -42,6 +42,37 @@ $ curl http://127.0.0.1:8001/ | jq
         "thread": 2,
         "use_memory": 1.3995278
       }
+    }
+  ]
+}
+```
+
+#### check & result error
+```
+$ curl http://127.0.0.1:8001/ | jq
+{
+  "status_code": 500,
+  "process": [
+    {
+      "Label": "nginx",
+      "pidfile": "/var/run/nginx.pid",
+      "running": true,
+      "detail": {
+        "name": "nginx",
+        "pid": 10709,
+        "ppid": 1,
+        "command": "nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf",
+        "stat": "S",
+        "thread": 1,
+        "use_memory": 0.10912581
+      }
+    },
+    {
+      "Label": "td-agent",
+      "pidfile": "/var/run/td-agent/td-agent.pid",
+      "running": false,
+      "message": "PID file not opened",
+      "detail": {}
     }
   ]
 }
