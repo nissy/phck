@@ -2,6 +2,47 @@
 HCK is system health checker web server.
 
 ## Usage
+
+#### listen web server
 ```
 $ ./hck hck.conf
+```
+
+
+#### check & result
+```
+$ curl http://127.0.0.1:8001/ | jq
+{
+  "status_code": 200,
+  "process": [
+    {
+      "label": "nginx",
+      "pidfile": "/var/run/nginx.pid",
+      "running": true,
+      "detail": {
+        "name": "nginx",
+        "pid": 10709,
+        "ppid": 1,
+        "command": "nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf",
+        "stat": "S",
+        "thread": 1,
+        "use_memory": 0.10912581
+      }
+    },
+    {
+      "label": "td-agent",
+      "pidfile": "/var/run/td-agent/td-agent.pid",
+      "running": true,
+      "detail": {
+        "name": "ruby",
+        "pid": 22499,
+        "ppid": 1,
+        "command": "/opt/td-agent/embedded/bin/ruby /usr/sbin/td-agent --log /var/log/td-agent/td-agent.log --use-v1-config --group td-agent --daemon /var/run/td-agent/td-agent.pid",
+        "stat": "S",
+        "thread": 2,
+        "use_memory": 1.3995278
+      }
+    }
+  ]
+}
 ```

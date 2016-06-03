@@ -9,7 +9,7 @@ import (
 )
 
 type Process struct {
-	Label   string        `toml:"Label"    json:"Label"`
+	Label   string        `toml:"Label"   json:"label"`
 	PIDFile string        `toml:"PIDFile" json:"pidfile"`
 	Running bool          `toml:"-"       json:"running"`
 	Message string        `toml:"-"       json:"message,omitempty"`
