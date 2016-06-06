@@ -9,10 +9,12 @@ $ ./phck phck.conf
 ```
 
 #### check process & result success
+HTTP status code 200
+
 ```
 $ curl http://127.0.0.1:8001/ | jq
 {
-  "status_code": 200,
+  "status": true,
   "process": [
     {
       "label": "nginx",
@@ -47,10 +49,12 @@ $ curl http://127.0.0.1:8001/ | jq
 ```
 
 #### check process & result error
+HTTP status code 500
+
 ```
 $ curl http://127.0.0.1:8001/ | jq
 {
-  "status_code": 500,
+  "status": false,
   "process": [
     {
       "label": "nginx",

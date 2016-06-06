@@ -18,14 +18,13 @@ func NewController(h model.Health) *Controller {
 }
 
 func (cntr *Controller) HealthCheck(c echo.Context) error {
-	cntr.Health.StatusCode = HealthStatusCode(cntr.Health.UpdateHealth())
-	return c.JSON(cntr.Health.StatusCode, cntr.Health)
+	code := HealthStatusCode(cntr.Health.IsHealth())
+	return c.JSON(code, cntr.Health)
 }
 
 func HealthStatusCode(ok bool) int {
 	if ok {
 		return http.StatusOK
 	}
-
 	return http.StatusInternalServerError
 }

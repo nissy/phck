@@ -11,12 +11,12 @@ import (
 )
 
 type Process struct {
-	Label   string        `toml:"Label"   json:"label"`
-	Running bool          `toml:"-"       json:"running"`
-	PIDFile string        `toml:"PIDFile" json:"pidfile"`
-	Message string        `toml:"-"       json:"message,omitempty"`
-	Error   error         `toml:"-"       json:"-"`
-	Detail  ProcessDetail `toml:"-"       json:"detail,omitempty"`
+	Label   string         `toml:"Label"   json:"label"`
+	Running bool           `toml:"-"       json:"running"`
+	PIDFile string         `toml:"PIDFile" json:"pidfile"`
+	Message string         `toml:"-"       json:"message,omitempty"`
+	Error   error          `toml:"-"       json:"-"`
+	Detail  *ProcessDetail `toml:"-"       json:"detail,omitempty"`
 }
 
 type ProcessDetail struct {
@@ -34,7 +34,7 @@ func (p *Process) IsProcess() bool {
 	p.Running = true
 	p.Error = nil
 	p.Message = ""
-	p.Detail = ProcessDetail{}
+	p.Detail = &ProcessDetail{}
 
 	if p.Detail.PID, p.Error = ReadPIDFile(p.PIDFile); p.Error != nil {
 		p.Message = "PID file is not open"
