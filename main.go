@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"net/http"
 	"os"
 	"runtime"
 
@@ -86,12 +85,7 @@ func _main() int {
 	}
 
 	if cmd.Options.Cli {
-		c.Health.StatusCode = http.StatusOK
-		for _, v := range c.Health.Process {
-			if !v.IsProcess() {
-				c.Health.StatusCode = http.StatusInternalServerError
-			}
-		}
+		c.Health.IsHealth()
 
 		b, err := json.Marshal(c.Health)
 

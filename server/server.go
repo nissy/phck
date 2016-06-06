@@ -1,8 +1,11 @@
 package server
 
 import (
+	"io/ioutil"
+	"os"
+	"strconv"
+
 	"github.com/facebookgo/grace/gracehttp"
-	"github.com/facebookgo/pidfile"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/engine/standard"
 	"github.com/ngc224/phck/config"
@@ -11,13 +14,15 @@ import (
 
 type Server struct {
 	router     *echo.Echo
+	config     *config.Config
 	controller *controller.Controller
 }
 
 func NewServer(c *config.Config) *Server {
 	return &Server{
 		router:     echo.New(),
-		controller: controller.NewController(c),
+		config:     c,
+		controller: controller.NewController(c.Health),
 	}
 }
 
@@ -25,18 +30,20 @@ func (srv *Server) routing() {
 	srv.router.GET("/", srv.controller.HealthCheck)
 }
 
+func WritePIDFile(filepath string) error {
+	return ioutil.WriteFile(filepath, []byte(strconv.Itoa(os.Getpid())), os.ModePerm)
+}
+
 func (srv *Server) Run() error {
 	srv.routing()
 
-	if len(srv.controller.Config.PIDFile) > 0 {
-		pidfile.SetPidfilePath(srv.controller.Config.PIDFile)
-
-		if err := pidfile.Write(); err != nil {
+	if len(srv.config.PIDFile) > 0 {
+		if err := WritePIDFile(srv.config.PIDFile); err != nil {
 			return err
 		}
 	}
 
-	std := standard.New(srv.controller.Config.Listen)
+	std := standard.New(srv.config.Listen)
 	std.SetHandler(srv.router)
 	if err := gracehttp.Serve(std.Server); err != nil {
 		return err

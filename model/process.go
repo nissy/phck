@@ -31,45 +31,49 @@ type ProcessDetail struct {
 }
 
 func (p *Process) IsProcess() bool {
-	p.Running = false
+	p.Running = true
 	p.Error = nil
 	p.Message = ""
 	p.Detail = ProcessDetail{}
 
 	if p.Detail.PID, p.Error = ReadPIDFile(p.PIDFile); p.Error != nil {
 		p.Message = "PID file is not open"
+		p.Running = false
 		return p.Running
 	}
 
 	if ok, _ := process.PidExists(p.Detail.PID); !ok {
 		p.Message = "PID not found"
+		p.Error = errors.New(p.Message)
+		p.Running = false
 		return p.Running
 	}
 
-	p.SetDetail(p.Detail.PID)
-	return p.Running
-}
+	d, _ := process.NewProcess(p.Detail.PID)
 
-func (p *Process) SetDetail(pid int32) {
-	p.Running = true
-	d, _ := process.NewProcess(pid)
-	p.Detail.Name, _ = d.Name()
-	p.Detail.User, _ = d.Username()
-	p.Detail.PPID, _ = d.Ppid()
-	p.Detail.Command, _ = d.Cmdline()
-	p.Detail.Thread, _ = d.NumThreads()
-	p.Detail.UseMemory, _ = d.MemoryPercent()
-	p.Detail.Stat, _ = d.Status()
+	p.Detail.Name, p.Error = d.Name()
+	p.Detail.User, p.Error = d.Username()
+	p.Detail.PPID, p.Error = d.Ppid()
+	p.Detail.Command, p.Error = d.Cmdline()
+	p.Detail.Thread, p.Error = d.NumThreads()
+	p.Detail.UseMemory, p.Error = d.MemoryPercent()
+	p.Detail.Stat, p.Error = d.Status()
 
 	if strings.Contains(p.Detail.Stat, "Z") {
-		p.Error = errors.New("Process is zombie")
+		p.Message = "Process is zombie"
+		p.Error = errors.New(p.Message)
 		p.Running = false
+		return p.Running
 	}
 
 	if strings.Contains(p.Detail.Stat, "X") {
-		p.Error = errors.New("Process is dead")
+		p.Message = "Process is dead"
+		p.Error = errors.New(p.Message)
 		p.Running = false
+		return p.Running
 	}
+
+	return p.Running
 }
 
 func ReadPIDFile(filename string) (int32, error) {

@@ -4,27 +4,28 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo"
-	"github.com/ngc224/phck/config"
+	"github.com/ngc224/phck/model"
 )
 
 type Controller struct {
-	Config *config.Config
+	Health model.Health
 }
 
-func NewController(c *config.Config) *Controller {
+func NewController(h model.Health) *Controller {
 	return &Controller{
-		Config: c,
+		Health: h,
 	}
 }
 
 func (cntr *Controller) HealthCheck(c echo.Context) error {
-	cntr.Config.Health.StatusCode = http.StatusOK
+	cntr.Health.StatusCode = HealthStatusCode(cntr.Health.UpdateHealth())
+	return c.JSON(cntr.Health.StatusCode, cntr.Health)
+}
 
-	for _, v := range cntr.Config.Health.Process {
-		if !v.IsProcess() {
-			cntr.Config.Health.StatusCode = http.StatusInternalServerError
-		}
+func HealthStatusCode(ok bool) int {
+	if ok {
+		return http.StatusOK
 	}
 
-	return c.JSON(cntr.Config.Health.StatusCode, cntr.Config.Health)
+	return http.StatusInternalServerError
 }
