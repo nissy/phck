@@ -1,4 +1,6 @@
 ### HCK
 phck
+phck.conf
+spec/
 
 !.gitkeep
