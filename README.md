@@ -1,12 +1,19 @@
 # PHCK
 PHCK is process health checker web server.
 
-## Usage
+## Install & Listen web server
+```
+$ go get github.com/ngc224/phck
+$ phck phck.conf
+```
+or
+```
+$ sudo yum install https://github.com/ngc224/phck/releases/download/v0.1/phck-0.1-1.el7.centos.x86_64.rpm
+$ sudo systemctl start phck.service
+```
 
-#### listen web server
-```
-$ ./phck phck.conf
-```
+
+## Usage
 
 #### check process & result success
 HTTP status code 200
@@ -83,7 +90,7 @@ $ curl -s http://127.0.0.1:8939/ | jq
 
 #### CLI mode
 ```
-$ ./phck --cli phck.conf | jq
+$ phck --cli phck.conf | jq
 ```
 
 ## Help
