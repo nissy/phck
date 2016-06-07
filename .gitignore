@@ -1,6 +1,5 @@
-### HCK
+### PHCK
 phck
-phck.conf
-spec/
+Vagrantfile
 
 !.gitkeep

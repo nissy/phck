@@ -12,8 +12,8 @@ import (
 )
 
 const (
-	ApplicationName = "PHCK"
-	ConfigFilePath  = "./phck.conf"
+	ApplicationName = "phck"
+	ConfigFilePath  = "phck.conf"
 )
 
 type Command struct {
@@ -22,16 +22,17 @@ type Command struct {
 }
 
 type Options struct {
-	Cli     bool `short:"c" long:"cli"     description:"CLI mode"`
-	Help    bool `short:"h" long:"help"    description:"Show this help message"`
-	Version bool `short:"v" long:"version" description:"Show this build version"`
+	Cli     bool   `short:"c" long:"cli"description:"CLI mode"`
+	PIDFile string `long:"pidfile" description:"Set PIDFILE"`
+	Help    bool   `short:"h" long:"help" description:"Show this help message"`
+	Version bool   `short:"v" long:"version" description:"Show this build version"`
 }
 
 func NewCommand() (*Command, error) {
 	opts := &Options{}
 	p := flags.NewParser(opts, flags.None)
 	p.Name = ApplicationName
-	p.Usage = "[OPTIONS] CONFIG_FILE"
+	p.Usage = "[options] CONFIGFILE"
 	args, err := p.Parse()
 
 	if err != nil {
@@ -82,6 +83,10 @@ func _main() int {
 
 	if err != nil {
 		return PrintError(err)
+	}
+
+	if len(cmd.Options.PIDFile) > 0 {
+		c.PIDFile = cmd.Options.PIDFile
 	}
 
 	if cmd.Options.Cli {

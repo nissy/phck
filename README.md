@@ -12,7 +12,7 @@ $ ./phck phck.conf
 HTTP status code 200
 
 ```
-$ curl http://127.0.0.1:8001/ | jq
+$ curl -s http://127.0.0.1:8939/ | jq
 {
   "status": true,
   "process": [
@@ -52,7 +52,7 @@ $ curl http://127.0.0.1:8001/ | jq
 HTTP status code 500
 
 ```
-$ curl http://127.0.0.1:8001/ | jq
+$ curl -s http://127.0.0.1:8939/ | jq
 {
   "status": false,
   "process": [
@@ -74,7 +74,7 @@ $ curl http://127.0.0.1:8001/ | jq
       "label": "td-agent",
       "pidfile": "/var/run/td-agent/td-agent.pid",
       "running": false,
-      "message": "PID file not opened",
+      "message": "PID file not open",
       "detail": {}
     }
   ]
@@ -89,11 +89,11 @@ $ ./phck --cli phck.conf | jq
 ## Help
 ```
 Usage:
-  PHCK [OPTIONS] CONFIG_FILE
+  phck [options] CONFIGFILE
 
 Application Options:
   -c, --cli      CLI mode
+      --pidfile= Set PIDFILE
   -h, --help     Show this help message
   -v, --version  Show this build version
-
 ```
