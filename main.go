@@ -90,9 +90,7 @@ func cli() int {
 	}
 
 	if cmd.Options.Cli {
-		if !c.Health.IsHealth() {
-
-		}
+		c.Health.IsHealth()
 
 		b, err := json.Marshal(c.Health)
 
