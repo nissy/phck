@@ -11,7 +11,7 @@ import (
 )
 
 type Process struct {
-	Label   string         `toml:"Label"   json:"label"`
+	Label   string         `toml:"Label"   json:"label,omitempty"`
 	Running bool           `toml:"-"       json:"running"`
 	PIDFile string         `toml:"PIDFile" json:"pidfile"`
 	Message string         `toml:"-"       json:"message,omitempty"`

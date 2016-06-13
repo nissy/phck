@@ -12,8 +12,8 @@ import (
 )
 
 const (
-	ApplicationName = "phck"
-	ConfigFilePath  = "phck.conf"
+	ApplicationName       = "phck"
+	defaultConfigFilePath = "phck.conf"
 )
 
 type Command struct {
@@ -54,20 +54,20 @@ func (cmd *Command) GetConfigFilePath() string {
 		return cmd.Args[0]
 	}
 
-	return ConfigFilePath
+	return defaultConfigFilePath
 }
 
 func main() {
-	os.Exit(_main())
+	os.Exit(cli())
 }
 
-func _main() int {
+func cli() int {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 
 	cmd, err := NewCommand()
 
 	if err != nil {
-		return PrintError(err)
+		return printError(err)
 	}
 
 	if cmd.Options.Help {
@@ -82,7 +82,7 @@ func _main() int {
 	c, err := config.NewConfig(cmd.GetConfigFilePath())
 
 	if err != nil {
-		return PrintError(err)
+		return printError(err)
 	}
 
 	if len(cmd.Options.PIDFile) > 0 {
@@ -90,26 +90,32 @@ func _main() int {
 	}
 
 	if cmd.Options.Cli {
-		c.Health.IsHealth()
+		if !c.Health.IsHealth() {
+
+		}
 
 		b, err := json.Marshal(c.Health)
 
 		if err != nil {
-			return PrintError(err)
+			return printError(err)
 		}
 
 		fmt.Printf("%s", b)
 		return 0
 	}
 
+	return listenServer(c)
+}
+
+func listenServer(c *config.Config) int {
 	if err := server.NewServer(c).Run(); err != nil {
-		return PrintError(err)
+		return printError(err)
 	}
 
 	return 0
 }
 
-func PrintError(err error) int {
+func printError(err error) int {
 	fmt.Fprintf(os.Stderr, "Error: %s\n", err)
 	return 1
 }

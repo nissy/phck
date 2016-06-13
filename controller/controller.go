@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo"
+	"github.com/ngc224/phck/config"
 	"github.com/ngc224/phck/model"
 )
 
@@ -11,9 +12,9 @@ type Controller struct {
 	Health model.Health
 }
 
-func NewController(h model.Health) *Controller {
+func NewController(c *config.Config) *Controller {
 	return &Controller{
-		Health: h,
+		Health: c.Health,
 	}
 }
 

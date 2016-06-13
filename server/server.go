@@ -22,7 +22,7 @@ func NewServer(c *config.Config) *Server {
 	return &Server{
 		router:     echo.New(),
 		config:     c,
-		controller: controller.NewController(c.Health),
+		controller: controller.NewController(c),
 	}
 }
 

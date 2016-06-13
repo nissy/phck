@@ -7,6 +7,7 @@ import (
 
 type Config struct {
 	Listen  string       `toml:"listen"  json:"listen"`
+	LOGFile string       `toml:"logfile" json:"-"`
 	PIDFile string       `toml:"pidfile" json:"-"`
 	Health  model.Health `toml:"health"  json:"health"`
 }
