@@ -1,5 +1,5 @@
 [Unit]
-Description = PHCK is system health checker web server.
+Description   = PHCK is system health checker web server.
 Documentation = https://github.com/ngc224/phck
 
 [Service]

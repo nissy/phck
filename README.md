@@ -8,7 +8,7 @@ $ phck phck.conf
 ```
 or
 ```
-$ sudo yum install https://github.com/ngc224/phck/releases/download/v0.1/phck-0.1-1.el7.centos.x86_64.rpm
+$ sudo yum install https://github.com/ngc224/phck/releases/download/v0.2/phck-0.2-1.el7.centos.x86_64.rpm
 $ sudo systemctl start phck.service
 ```
 
@@ -19,8 +19,14 @@ $ sudo systemctl start phck.service
 HTTP status code 200
 
 ```
-$ curl -s http://127.0.0.1:8939/ | jq
+$ curl -i http://127.0.0.1:8939/
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Date: Wed, 15 Jun 2016 08:16:41 GMT
+
 {
+  "datetime": "2016-06-15 16:38:27",
+  "hostname": "localhost",
   "status": true,
   "process": [
     {
@@ -59,8 +65,14 @@ $ curl -s http://127.0.0.1:8939/ | jq
 HTTP status code 500
 
 ```
-$ curl -s http://127.0.0.1:8939/ | jq
+$ curl -i http://127.0.0.1:8939/
+HTTP/1.1 500 Internal Server Error
+Content-Type: application/json; charset=utf-8
+Date: Wed, 15 Jun 2016 08:15:22 GMT
+
 {
+  "datetime": "2016-06-15 16:38:27",
+  "hostname": "localhost",
   "status": false,
   "process": [
     {
@@ -90,7 +102,7 @@ $ curl -s http://127.0.0.1:8939/ | jq
 
 #### CLI mode
 ```
-$ phck --cli phck.conf | jq
+$ phck --cli phck.conf
 ```
 
 ## Help
