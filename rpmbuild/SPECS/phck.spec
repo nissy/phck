@@ -1,7 +1,7 @@
 Summary: PHCK is system health checker web server.
 Name: phck
-Version: 0.1
-Release: 1
+Version: 0.2
+Release: 1%{?dist}
 License: GNU General Public License, Version 3
 Group: System Environment/Base
 URL: https://github.com/ngc224/phck
