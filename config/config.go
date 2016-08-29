@@ -6,10 +6,10 @@ import (
 )
 
 type Config struct {
-	Listen  string      `toml:"listen"  json:"listen"`
-	LOGFile string      `toml:"logfile" json:"-"`
-	PIDFile string      `toml:"pidfile" json:"-"`
-	Health  phck.Health `toml:"health"  json:"health"`
+	Listen  string      `toml:"listen"   json:"listen"`
+	LOGFile string      `toml:"log_file" json:"-"`
+	PIDFile string      `toml:"pid_file" json:"-"`
+	Health  phck.Health `toml:"health"   json:"health"`
 }
 
 func NewConfig(filePath string) (*Config, error) {

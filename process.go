@@ -11,12 +11,12 @@ import (
 )
 
 type Process struct {
-	Label   string         `toml:"Label"   json:"label,omitempty"`
-	Running bool           `toml:"-"       json:"running"`
-	PIDFile string         `toml:"PIDFile" json:"pidfile"`
-	Message string         `toml:"-"       json:"message,omitempty"`
-	Error   error          `toml:"-"       json:"-"`
-	Detail  *ProcessDetail `toml:"-"       json:"detail,omitempty"`
+	Label   string         `toml:"label"    json:"label,omitempty"`
+	Running bool           `toml:"-"        json:"running"`
+	PIDFile string         `toml:"pid_file" json:"pid_file"`
+	Message string         `toml:"-"        json:"message,omitempty"`
+	Error   error          `toml:"-"        json:"-"`
+	Detail  *ProcessDetail `toml:"-"        json:"detail,omitempty"`
 }
 
 type ProcessDetail struct {
