@@ -3,13 +3,8 @@ PHCK is process health checker web server.
 
 ## Install & Listen web server
 ```
-$ go get github.com/ngc224/phck
+$ go get github.com/ngc224/phck/cmd/phck
 $ phck phck.conf
-```
-or
-```
-$ sudo yum install https://github.com/ngc224/phck/releases/download/v0.2/phck-0.2-1.el7.centos.x86_64.rpm
-$ sudo systemctl start phck.service
 ```
 
 
