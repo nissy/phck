@@ -13,7 +13,7 @@ import (
 type Process struct {
 	Label   string         `toml:"label"    json:"label,omitempty"`
 	Running bool           `toml:"-"        json:"running"`
-	PIDFile string         `toml:"pid_file" json:"pid_file"`
+	PIDFile string         `toml:"pidfile"  json:"pidfile"`
 	Message string         `toml:"-"        json:"message,omitempty"`
 	Error   error          `toml:"-"        json:"-"`
 	Detail  *ProcessDetail `toml:"-"        json:"detail,omitempty"`

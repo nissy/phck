@@ -4,7 +4,7 @@ PHCK is process health checker web server.
 ## Install & Listen web server
 ```
 $ go get github.com/ngc224/phck/cmd/phck
-$ phck phck.conf
+$ phck -c phck.sample.conf
 ```
 
 
@@ -97,17 +97,15 @@ Date: Wed, 15 Jun 2016 08:15:22 GMT
 
 #### CLI mode
 ```
-$ phck --cli phck.conf
+$ phck -cli -c phck.sample.conf
 ```
 
 ## Help
 ```
-Usage:
-  phck [options] CONFIGFILE
-
-Application Options:
-  -c, --cli      CLI mode
-      --pidfile= Set PIDFILE
-  -h, --help     Show this help message
-  -v, --version  Show this build version
+Usage: phck [options]
+  -c string
+        set cfgiguration file (default "phck.conf")
+  -cli  CLI mode
+  -h    this help
+  -v    show this build version
 ```
